@@ -33,6 +33,14 @@ backend/*.sqlite
 backend/*.sqlite3
 backend/logs/
 
+# Large ML files - download separately or use Git LFS
+*.pkl
+*.csv
+phishing_email.csv
+backend/models/*.pkl
+best_phishing_model.pkl
+tfidf_vectorizer.pkl
+
 # Node
 node_modules/
 .pnp

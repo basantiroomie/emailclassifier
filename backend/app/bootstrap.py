@@ -5,6 +5,7 @@ from app.infrastructure.extractors.eml_extractor import EmlExtractor
 from app.infrastructure.nlp.tokenizer_simple import SimpleTokenizer
 from app.infrastructure.classifiers.rule_based import RuleBasedClassifier
 from app.infrastructure.classifiers.openai_llm import OpenAIClassifier
+from app.infrastructure.classifiers.ml_classifier import MLClassifier
 from app.infrastructure.classifiers.smart_classifier import SmartClassifier
 from app.infrastructure.responders.simple_templates import SimpleResponder
 from app.infrastructure.repositories.sql_log_repository import SqlLogRepository
@@ -43,12 +44,22 @@ def build_use_case():
 
 
 def build_classifier():
-    """Retorna o classificador (rule-based + opcional LLM)"""
+    """Retorna o classificador (ML, rule-based, ou opcional LLM)"""
+    # Priority 1: Use ML model if enabled
+    if getattr(settings, "USE_ML_MODEL", False):
+        try:
+            return MLClassifier()
+        except Exception as e:
+            print(f"Failed to load ML classifier, falling back to rule-based: {e}")
+    
+    # Priority 2: Use OpenAI if enabled
     rule = RuleBasedClassifier()
     if getattr(settings, "USE_OPENAI", False):
         llm = OpenAIClassifier()
         min_conf = getattr(settings, "RB_MIN_CONF", 0.70)
         return SmartClassifier(rule_based=rule, llm=llm, min_conf=min_conf)
+    
+    # Priority 3: Default to rule-based
     return rule
 
 

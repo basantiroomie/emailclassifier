@@ -27,7 +27,7 @@ class ImapService:
             self._thread = None
 
     def _worker(self):
-        print("[DEBUG] Entrou no worker do ImapService")
+        print("[DEBUG] Entered ImapService worker")
         use_case = SyncEmailsUseCase(
             email_source=self.source,
             classifier=self.classifier,
@@ -38,11 +38,11 @@ class ImapService:
 
         while not self._stop_event.is_set():
             try:
-                print("[DEBUG] Chamando use_case.run()")
-                use_case.run(stop_event=self._stop_event)   # <-- passa o evento
+                print("[DEBUG] Calling use_case.run()")
+                use_case.run(stop_event=self._stop_event)   # <-- passes the event
             except Exception:
                 import traceback
-                print("[ERROR] Falha no use_case.run():")
+                print("[ERROR] Failure in use_case.run():")
                 traceback.print_exc()
             self._stop_event.wait(self.interval)
 

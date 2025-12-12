@@ -249,6 +249,34 @@ pnpm build
 # Deploy dist folder to your hosting service
 ```
 
+## 🐛 Troubleshooting
+
+### Backend Issues
+
+**"sh: 1: source: not found"**
+- Fixed in latest version. The scripts now use `.` instead of `source` for POSIX compatibility.
+
+**Scikit-learn version warnings**
+- If you see version mismatch warnings, update scikit-learn:
+  ```bash
+  cd backend
+  . venv/bin/activate
+  pip install --upgrade scikit-learn
+  ```
+
+**Port 8000 already in use**
+- Stop any existing processes: `lsof -ti:8000 | xargs kill -9`
+
+### Frontend Issues
+
+**Next.js turbopack lockfile warnings**
+- The project uses npm at the monorepo level but pnpm in the frontend.
+- This is intentional and won't affect functionality.
+- To silence the warning, the `turbopack.root` is configured in `next.config.ts`.
+
+**Port 3000 already in use**
+- Stop any existing processes: `lsof -ti:3000 | xargs kill -9`
+
 ## 🤝 Contributing
 
 1. Fork the repository

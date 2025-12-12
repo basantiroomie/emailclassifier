@@ -51,7 +51,7 @@ class ImapEmailSource(EmailSourcePort):
 
     def move_to_folder(self, msg_id: str, folder: str):
         self._connect()
-        print(f"[DEBUG] Movendo mensagem {msg_id} para '{folder}'")
+        print(f"[DEBUG] Moving message {msg_id} to '{folder}'")
 
         try:
             self.conn.create(folder)
@@ -62,12 +62,12 @@ class ImapEmailSource(EmailSourcePort):
             status, resp = self.conn.store(msg_id, '+X-GM-LABELS', f'({folder})')
             print(f"[DEBUG] Gmail store +X-GM-LABELS -> {status}, {resp}")
         except Exception as e:
-            print(f"[WARN] Gmail labels não suportadas, usando fallback: {e}")
+            print(f"[WARN] Gmail labels not supported, using fallback: {e}")
             try:
                 self.conn.copy(msg_id, folder)
                 self.conn.store(msg_id, "+FLAGS", "\\Deleted")
                 self.conn.expunge()
-                print(f"[DEBUG] Mensagem {msg_id} copiada para {folder} e removida da origem")
+                print(f"[DEBUG] Message {msg_id} copied to {folder} and removed from source")
             except Exception as e2:
                 print(f"[ERROR] Falha ao mover mensagem {msg_id} para {folder}: {e2}")
                 return

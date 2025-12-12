@@ -14,6 +14,12 @@ ALGORITHM = "HS256"
 #ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 class Settings(BaseModel):
+    # ML Model settings
+    USE_ML_MODEL: bool = os.getenv("USE_ML_MODEL", "true").strip().lower() == "true"
+    ML_MODEL_PATH: Optional[str] = os.getenv("ML_MODEL_PATH")  # Optional custom path
+    ML_VECTORIZER_PATH: Optional[str] = os.getenv("ML_VECTORIZER_PATH")  # Optional custom path
+    
+    # OpenAI settings (fallback)
     USE_OPENAI: bool = os.getenv("USE_OPENAI", "false").strip().lower() == "true"
     OPENAI_API_KEY: Optional[str] = os.getenv("OPENAI_API_KEY")
     OPENAI_MODEL: str = os.getenv("OPENAI_MODEL", "gpt-4.1-nano")

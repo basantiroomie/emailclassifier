@@ -9,6 +9,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 COPY scripts ./scripts
 
+# Copia modelos ML
+COPY models ./models
+
 # Ambiente
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8044

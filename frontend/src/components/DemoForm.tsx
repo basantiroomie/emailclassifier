@@ -169,29 +169,9 @@ export default function ClassifierForm() {
           <div>
             <strong>Suggested reply:</strong> {result.suggested_reply}
           </div>
-
-          {result.total_tokens !== undefined && (
-            <div className="mt-4 pt-4 border-t text-sm text-gray-600 space-y-1">
-              <div>
-                <strong>Model:</strong> {result.used_model}
-              </div>
-              <div>
-                <strong>Prompt tokens:</strong> {result.prompt_tokens}
-              </div>
-              <div>
-                <strong>Completion tokens:</strong> {result.completion_tokens}
-              </div>
-              <div>
-                <strong>Total tokens:</strong> {result.total_tokens}
-              </div>
-              <div>
-                <strong>Cost:</strong>{" "}
-                {result.cost_usd
-                  ? `$${Number(result.cost_usd).toFixed(4)}`
-                  : "N/A"}
-              </div>
-            </div>
-          )}
+          <div className="mt-4 pt-4 border-t text-sm text-gray-600">
+            <strong>Model:</strong> {result.used_model || 'ml_classifier'}
+          </div>
         </div>
       )}
     </div>
