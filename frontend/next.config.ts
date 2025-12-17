@@ -1,11 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    // 🚀 não falhar no build por erros de ESLint
+    // Don't fail build on ESLint errors
     ignoreDuringBuilds: true,
   },
-  turbopack: {
-    root: '/home/basantiroomie/projects/email-classifier-monorepo',
+  typescript: {
+    // Don't fail build on TypeScript errors (optional)
+    ignoreBuildErrors: false,
   },
 };
 
